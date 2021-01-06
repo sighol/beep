@@ -8,7 +8,7 @@ fn main() {
     let sink = rodio::Sink::try_new(&stream_handle).unwrap();
 
     babubabu(&sink);
-    add_sound(&sink, 440, 200);
+    add_sound(&sink, 440, 100);
 
     sink.set_volume(0.5);
     sink.sleep_until_end();
@@ -18,11 +18,11 @@ fn babubabu(sink: &rodio::Sink) {
     let start = 440.0 * 2.0;
     let end = 440.0;
     let num = 5;
-    for _ in 0..3 {
+    for _ in 0..1 {
         for i in 0..(num + 1) {
             let freq = ((num - i) as f64 / num as f64) * (start - end) + end;
             let freq = freq as u32;
-            add_sound(&sink, freq, 50);
+            add_sound(&sink, freq, 30);
         }
     }
 }
