@@ -8,7 +8,7 @@ fn main() {
     let sink = rodio::Sink::try_new(&stream_handle).unwrap();
 
     babubabu(&sink);
-    add_sound(&sink, 440, 100);
+    add_sound(&sink, 440.0, 100);
 
     sink.set_volume(0.5);
     sink.sleep_until_end();
@@ -21,7 +21,7 @@ fn babubabu(sink: &rodio::Sink) {
     for _ in 0..1 {
         for i in 0..(num + 1) {
             let freq = ((num - i) as f64 / num as f64) * (start - end) + end;
-            let freq = freq as u32;
+            let freq = freq as f32;
             add_sound(&sink, freq, 30);
         }
     }
@@ -32,12 +32,12 @@ fn random(sink: &rodio::Sink) {
 
     for _ in 0..10 {
         let freq: f64 = rng.gen();
-        let freq = 200 + ((freq * 1000.0) as u32);
-        add_sound(&sink, freq, 120);
+        let freq = 200.0 + (freq * 1000.0);
+        add_sound(&sink, freq as f32, 120);
     }
 }
 
-fn add_sound(sink: &rodio::Sink, freq: u32, millis: u64) {
+fn add_sound(sink: &rodio::Sink, freq: f32, millis: u64) {
     let source = rodio::source::SineWave::new(freq);
     let source = source.take_duration(time::Duration::from_millis(millis));
     sink.append(source);
